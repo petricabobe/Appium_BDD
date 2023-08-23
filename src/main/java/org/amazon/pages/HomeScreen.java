@@ -2,7 +2,6 @@ package org.amazon.pages;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import net.serenitybdd.core.pages.PageObject;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,42 +28,58 @@ public class HomeScreen extends PageObject {
     @AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/sso_splash_logo")
     WebElement amazonLogo;
 
-    @AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/btn_redirect_marketplace")
-    WebElement redirectToUAE;
+    @AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/btn_stay_marketplace")
+    WebElement stayOnAmazon;
+    @AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/btn_cancel")
+    WebElement cancel;
 
-    @AndroidFindBy(xpath = "//android.widget.ImageView[contains(@content-desc,'Menu')]")
+    @AndroidFindBy(uiAutomator = "text(\"Shop by Department\")")
+    WebElement shopByDepartment;
+
+    @AndroidFindBy(uiAutomator = "descriptionContains(\"Menu\")")
     WebElement menuBurger;
 
-    @AndroidFindBy(id = "sbceal")
+    @AndroidFindBy(uiAutomator = "descriptionContains(\"Home\")")
+    WebElement homeBurger;
+    @AndroidFindBy(uiAutomator="text(\"Electronics\")")
     WebElement electronicsOption;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Home Theater, TV & Video\"]")
+    @AndroidFindBy(uiAutomator = "description(\"Home Theater, TV & Video\"")
     WebElement pageDescription;
 
     public void openHomeScreen() {
         wait.until(visibilityOf(amazonLogo));
-        wait.until(visibilityOf(redirectToUAE))
-                        .click();
+        wait.until(visibilityOf(stayOnAmazon))
+                .click();
         wait.until(visibilityOf(skipSignInBtn))
-                        .click();
+                .click();
     }
 
     public void burgerMenu() {
-       wait.until(elementToBeClickable(menuBurger)).click();
+        wait.until(elementToBeClickable(menuBurger)).click();
     }
 
-    public void searchByDepartment(String option) {
-        getDriver().findElement(By.xpath("//android.view.ViewGroup[contains(text()," + option +")]"))
-                        .click();
-        wait.until(elementToBeClickable(electronicsOption)).click();
-    }
-    public void searchByCategory(String option){
-        WebElement category = getDriver()
-                .findElement(androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().text(\"" + option + "\"));"));
-        category.click();
+    public void shopByElectronicsDepartment() {
+        wait.until(visibilityOf(shopByDepartment))
+                .click();
+        wait.until(visibilityOf(electronicsOption))
+                .click();
     }
 
     public String getPageDescription() {
         return pageDescription.getText();
+    }
+
+    public void goHomeScreen() {
+        wait.until(elementToBeClickable(homeBurger))
+                .click();
+    }
+
+    public void checkAllDeals(String promo) {
+        getDriver().findElement(
+                        androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().text(\"" + promo + "\")).getChildByText(\"See all deals\")"))
+                .click();
+        //tap See all deals
+
     }
 }

@@ -18,6 +18,7 @@ import static org.amazon.utils.AppiumServer.stopServer;
 public class TestRunner {
     @BeforeClass
     public static void startAppium() {
+        System.out.println("start appium");
         startServer();
     }
 
