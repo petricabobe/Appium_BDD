@@ -46,6 +46,8 @@ public class HomeScreen extends PageObject {
 
     @AndroidFindBy(uiAutomator = "description(\"Home Theater, TV & Video\"")
     WebElement pageDescription;
+    @AndroidFindBy(uiAutomator = "text(\"See more\")
+    WebElement seeMoreBtn;
 
     public void openHomeScreen() {
         wait.until(visibilityOf(amazonLogo));
@@ -76,10 +78,23 @@ public class HomeScreen extends PageObject {
     }
 
     public void checkAllDeals(String promo) {
+        //first click on Home screen
+        homeBurger.click();
         getDriver().findElement(
-                        androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().text(\"" + promo + "\")).getChildByText(\"See all deals\")"))
+                        androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text(\"See all deals\"));"))
                 .click();
         //tap See all deals
 
-    }
+        //click on filters
+        //scroll to department show more
+        getDriver().findElement(androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(1)).scrollTextIntoView(\"Shop deals by department\"));"));
+               getDriver().findElement(androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(1)).scrollForward();"));
+                                            
+    seeMoreBtn.click();
+        //new UiScrollable(new UiSelector().scrollable(true).instance(1)).scrollTextIntoView("Software");
+//new UiScrollable(new UiSelector().scrollable(true).instance(1)).scrollForward();
+
+        //click text with "Show results";
+        //get text from new UiSelector().text("Software") uiAutomator
+                                                   }
 }
