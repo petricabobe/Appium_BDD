@@ -1,20 +1,15 @@
 package org.amazon.screens;
 
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.WebDriverFacade;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.google.common.collect.ImmutableMap.of;
 import static io.appium.java_client.AppiumBy.androidUIAutomator;
-import static io.appium.java_client.android.nativekey.AndroidKey.ENTER;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
@@ -75,12 +70,11 @@ public class MainScreen extends PageObject {
     }
 
 
-
     public boolean searchForCurrencyOnHomeScreen(String currency) {
         //search for $ after changing to AED
         //assert AED in text
         return getDriver().findElement(androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true))" +
-                ".scrollIntoView(new UiSelector().textContains(\"" + currency + "\"))"))
+                        ".scrollIntoView(new UiSelector().textContains(\"" + currency + "\"))"))
                 .isDisplayed();
     }
 
@@ -88,7 +82,7 @@ public class MainScreen extends PageObject {
         wait.until(visibilityOf(search))
                 .click();
         searchInput.sendKeys(product);
-        AndroidDriver androidDriver = ((AndroidDriver)((WebDriverFacade) getDriver()).getProxiedDriver());
+        AndroidDriver androidDriver = ((AndroidDriver) ((WebDriverFacade) getDriver()).getProxiedDriver());
         androidDriver.executeScript("mobile: performEditorAction", of("action", "Go"));
 
 
