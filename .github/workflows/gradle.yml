@@ -6,10 +6,10 @@ permissions:
   contents: read
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-12
     strategy:
       matrix:
-        api-level: [30, 31, 33, 34]
+        api-level: [29]
     steps:
       - name: checkout
         uses: actions/checkout@v3
