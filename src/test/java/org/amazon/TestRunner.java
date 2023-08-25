@@ -1,4 +1,4 @@
-package org.amazon.runner;
+package org.amazon;
 
 import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;

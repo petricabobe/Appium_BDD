@@ -1,48 +1,72 @@
 package org.amazon.stepdefinitions;
 
 import net.thucydides.core.annotations.Step;
-import org.amazon.pages.HomeScreen;
-import org.amazon.pages.ProductsScreen;
-import org.amazon.pages.SearchScreen;
+import org.amazon.screens.*;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class SearchSteps {
-    HomeScreen homeScreen;
-    SearchScreen searchScreen;
-    ProductsScreen productsScreen;
+    MainScreen mainScreen;
+    ListScreen listScreen;
+    FiltersScreen filterSScreen;
+    MenuScreen menuScreen;
+    ProductScreen productScreen;
 
-    @Step
-    public void openHomeScreen(){
-        homeScreen.openHomeScreen();
-    }
+//    @Step
+//    public void openHomeScreen() {
+//        mainScreen.openHomeScreen();
+//    }
 
-    public void enterMenu(){
-        homeScreen.burgerMenu();
-    }
-    @Step
-    public void searchByDepartment(String category){
-        homeScreen.shopByElectronicsDepartment();
-    }
-    @Step
-    public void searchBySubcategory(String subcategory) {
-        productsScreen.seeAllResults();
-        productsScreen.chooseSubCategory(subcategory);
-    }
-    @Step
-    public String getPageDescription(){
-        return getPageDescription();
+    public void enterMenu() {
+        mainScreen.burgerMenu();
     }
 
     @Step
-    public String getFilteredResults(String filter){
-        return productsScreen.filterWithOption(filter);
+    public void filterByDepartment(String category) {
+        menuScreen.shopByElectronicsDepartment();
     }
+
     @Step
-    public int resultsList(){
-        return searchScreen.getResultsList();
+    public void filterByCategory(String subcategory) {
+        filterSScreen.seeAllResults();
+        filterSScreen.chooseSubCategory(subcategory);
     }
+
     @Step
-    public void checkPromotions(String promo){
-        homeScreen.goHomeScreen();
-        homeScreen.checkAllDeals(promo);
+    public String getFilteredResults(String filter) {
+        return filterSScreen.filterWithOption(filter);
+    }
+
+    @Step
+    public int resultsList() {
+        return listScreen.getResultsList();
+    }
+
+    @Step
+    public void searchProduct(String product) {
+//        mainScreen.openHomeScreen();
+        mainScreen.searchForProduct(product);
+        listScreen.selectProduct();
+    }
+
+    @Step
+    public void swipePictures() {
+        productScreen.swipePictures();
+    }
+
+    @Step
+    public boolean checkVisibilityOfPriceAndPurchase() {
+        return isNullOrEmpty(productScreen.getPrice())
+                && isNullOrEmpty(productScreen.getPurchaseOptions());
+    }
+
+    @Step
+    public boolean checkAvailability(){
+        return isNullOrEmpty(productScreen.getAvailability());
+    }
+
+    @Step
+    public void addToCart(){
+        productScreen.clickAddToCart();
     }
 }
